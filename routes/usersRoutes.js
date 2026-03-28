@@ -5,7 +5,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *   get:
  *     summary: Retorna todos os usuários
  *     responses:
@@ -16,7 +16,7 @@ router.get('/', getUsers);
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *   post:
  *     summary: Cria um novo usuário
  *     requestBody:
@@ -48,7 +48,7 @@ router.post('/', createUser);
 
 /**
  * @swagger
- * /users/{id}:
+ * /api/users/{id}:
  *   put:
  *     summary: Atualiza um usuário
  *     parameters:
@@ -73,7 +73,7 @@ router.put('/:id', updateUser);
 
 /**
  * @swagger
- * /users/{id}:
+ * /api/users/{id}:
  *   delete:
  *     summary: Deleta um usuário
  *     parameters:
