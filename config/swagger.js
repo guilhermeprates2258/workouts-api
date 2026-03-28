@@ -10,7 +10,7 @@ const options = {
     },
     servers: [
       {
-        url: 'https://workouts-api.onrender.com',
+        url: 'https://workouts-api-t7n6.onrender.com',
       },
     ],
   },
