@@ -1,0 +1,39 @@
+import express from 'express';
+import { connectDB } from './config/db.js';
+import workoutRoutes from './routes/workoutRoutes.js';
+import userRoutes from './routes/usersRoutes.js';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './config/swagger.js';
+
+const app = express();
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+app.use('/users', userRoutes);
+
+app.use(express.json());
+
+app.use('/workouts', workoutRoutes);
+
+connectDB();
+
+app.get('/', (req, res) => {
+  res.send(`
+    <h1>🏋️ Workouts API</h1>
+    <p>API funcionando com sucesso 🚀</p>
+
+    <h2>Rotas disponíveis:</h2>
+    <ul>
+      <li>GET /workouts</li>
+      <li>POST /workouts</li>
+      <li>PUT /workouts/:id</li>
+      <li>DELETE /workouts/:id</li>
+      <li>GET /users</li>
+      <li>POST /users</li>
+    </ul>
+  `);
+});
+
+app.listen(3000, () => {
+  console.log('Servidor rodando na porta 3000');
+});
