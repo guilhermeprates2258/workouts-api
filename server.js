@@ -4,9 +4,11 @@ import workoutRoutes from './routes/workoutRoutes.js';
 import userRoutes from './routes/usersRoutes.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './config/swagger.js';
+import cors from 'cors';
+
 
 const app = express();
-
+app.use(cors());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/users', userRoutes);
