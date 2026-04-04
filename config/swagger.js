@@ -11,20 +11,18 @@ const options = {
     components: {
       securitySchemes: {
         cookieAuth: {
-          type: "apiKey",
-          in: "cookie",
-          name: "connect.sid",
+          type: 'apiKey',
+          in: 'cookie',
+          name: 'connect.sid',
         },
       },
-    }, // ✅ FECHA AQUI
-
+    },
     servers: [
       {
-        url: 'https://workouts-api-t7n6.onrender.com',
+        url: '/',
       },
     ],
   },
-
   apis: ['./routes/*.js'],
 };
 

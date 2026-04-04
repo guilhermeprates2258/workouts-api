@@ -1,29 +1,33 @@
-import express from "express";
-import passport from "passport";
+import express from 'express';
+import passport from 'passport';
 
 const router = express.Router();
 
-// login com Google
 router.get(
-  "/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+  '/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
-// callback
 router.get(
-  "/google/callback",
-  passport.authenticate("google", {
-    failureRedirect: "/login",
+  '/google/callback',
+  passport.authenticate('google', {
+    failureRedirect: '/api-docs',
   }),
   (req, res) => {
-    res.send("Login successful 🚀");
+    res.redirect('/api-docs');
   }
 );
 
-// logout
-router.get("/logout", (req, res) => {
-  req.logout(() => {
-    res.send("Logged out");
+router.get('/logout', (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+
+    req.session.destroy(() => {
+      res.clearCookie('connect.sid');
+      res.redirect('/api-docs');
+    });
   });
 });
 
