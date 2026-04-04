@@ -1,4 +1,5 @@
 import express from 'express';
+import { isAuthenticated } from '../middleware/authMiddleware.js';
 import {
   getWorkouts,
   getWorkoutById,
@@ -13,17 +14,21 @@ const router = express.Router();
  * @swagger
  * /workouts:
  *   get:
+ *     security:
+ *       - cookieAuth: []
  *     summary: Retorna todos os treinos
  *     responses:
  *       200:
  *         description: Lista de treinos
  */
-router.get('/', getWorkouts);
+router.get('/', isAuthenticated, getWorkouts);
 
 /**
  * @swagger
  * /workouts/{id}:
  *   get:
+ *     security:
+ *       - cookieAuth: []
  *     summary: Retorna um treino pelo ID
  *     parameters:
  *       - in: path
@@ -37,12 +42,14 @@ router.get('/', getWorkouts);
  *       404:
  *         description: Treino não encontrado
  */
-router.get('/:id', getWorkoutById);
+router.get('/:id', isAuthenticated, getWorkoutById);
 
 /**
  * @swagger
  * /workouts:
  *   post:
+ *     security:
+ *       - cookieAuth: []
  *     summary: Cria um novo treino
  *     requestBody:
  *       required: true
@@ -71,12 +78,14 @@ router.get('/:id', getWorkoutById);
  *       400:
  *         description: Erro de validação
  */
-router.post('/', createWorkout);
+router.post('/', isAuthenticated, createWorkout);
 
 /**
  * @swagger
  * /workouts/{id}:
  *   put:
+ *     security:
+ *       - cookieAuth: []
  *     summary: Atualiza um treino
  *     parameters:
  *       - in: path
@@ -96,12 +105,14 @@ router.post('/', createWorkout);
  *       404:
  *         description: Treino não encontrado
  */
-router.put('/:id', updateWorkout);
+router.put('/:id', isAuthenticated, updateWorkout);
 
 /**
  * @swagger
  * /workouts/{id}:
  *   delete:
+ *     security:
+ *       - cookieAuth: []
  *     summary: Deleta um treino
  *     parameters:
  *       - in: path
@@ -115,7 +126,6 @@ router.put('/:id', updateWorkout);
  *       404:
  *         description: Treino não encontrado
  */
-router.delete('/:id', deleteWorkout);
-
+router.delete('/:id', isAuthenticated, deleteWorkout);
 
 export default router;

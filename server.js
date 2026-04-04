@@ -1,23 +1,51 @@
 import express from 'express';
+import session from "express-session";
 import { connectDB } from './config/db.js';
 import workoutRoutes from './routes/workoutRoutes.js';
 import userRoutes from './routes/usersRoutes.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './config/swagger.js';
 import cors from 'cors';
+import passport from 'passport';
+import './config/passport.js';
+import dotenv from 'dotenv';
+import authRoutes from "./routes/authRoutes.js";
 
+
+connectDB();
+
+
+dotenv.config();
 
 const app = express();
+
+
+
+
+
 app.use(cors());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 
 app.use('/users', userRoutes);
 
 app.use(express.json());
 
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use("/auth", authRoutes);
+
 app.use('/workouts', workoutRoutes);
 
-connectDB();
+
 
 app.get('/', (req, res) => {
   res.send(`
